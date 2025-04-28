@@ -41,6 +41,12 @@
       name="redturtle.scale-hiddenprofiles"
       />
 
+  <adapter
+      factory=".storage.AnnotationStorage"
+      provides="plone.scale.storage.IImageScaleStorage"
+      for="Products.CMFCore.interfaces.IContentish *"
+      />
+
   <!-- -*- extra stuff goes here -*- -->
 
 </configure>
