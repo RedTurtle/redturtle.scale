@@ -1,9 +1,7 @@
-from plone.scale.scale import scalePILImage
-import logging
-import io
 from plone.scale import scale
+from plone.scale.scale import scalePILImage
+from redturtle.scale import logger
 
-logger = logging.getLogger(__name__)
 
 def scaleSingleFrame(
     image,
@@ -37,27 +35,36 @@ def scaleSingleFrame(
     if format_ in ["JPEG", "PNG"]:
         format_ = "WEBP"
     # --- DEBUG
-    sizes = {}
-    for t in set([format_, "WEBP", "JPEG", "PNG"]):
-        try:
-            out = io.BytesIO()
-            image.save(
-                out, 
-                format=t,
-                quality=88,
-                optimize=True,
-                progressive=True,
-            )
-            sizes[t] = out.tell()
-        except OSError:
-            sizes[t] = "---"
-    print(sizes)
+    # sizes = {}
+    # for t in set([format_, "WEBP", "JPEG", "PNG"]):
+    #     try:
+    #         out = io.BytesIO()
+    #         image.save(
+    #             out,
+    #             format=t,
+    #             quality=88,
+    #             optimize=True,
+    #             progressive=True,
+    #         )
+    #         sizes[t] = out.tell()
+    #     except OSError:
+    #         sizes[t] = "---"
+    # print(sizes)
     # --- DEBUG
     return image, format_
 
+
 def apply_patches():
     logger.info("monkeypatch plone.scale.scale.scaleSingleFrame")
+    # TODO: verificare che pillow abbia il supporto webp
+    scale._old_scaleSingleFrame = scale.scaleSingleFrame
     scale.scaleSingleFrame = scaleSingleFrame
+
+
+def unapply_patches():
+    logger.info("unmonkeypatch plone.scale.scale.scaleSingleFrame")
+    scale.scaleSingleFrame = scale._old_scaleSingleFrame
+    del scale._old_scaleSingleFrame
 
 
 # DEBUG
@@ -71,4 +78,3 @@ def apply_patches():
 #         return ret
 #     return inner
 # file.getImageInfo = wrap(file.getImageInfo)
-

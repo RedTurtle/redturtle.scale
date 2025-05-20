@@ -2,12 +2,14 @@
 """Init and utils."""
 from plone.namedfile import file
 from plone.namedfile.utils import _ensure_data
-from zope.i18nmessageid import MessageFactory
 from redturtle.scale.scale import apply_patches
+from zope.i18nmessageid import MessageFactory
+
+import logging
 
 
-_ = MessageFactory('redturtle.scale')
-
+_ = MessageFactory("redturtle.scale")
+logger = logging.getLogger(__name__)
 
 apply_patches()
 
@@ -43,6 +45,7 @@ def backport_181(orig):
                 height = int.from_bytes(height_bytes, "little") + 1
                 return content_type, width, height
         return orig(data)
+
     return getImageInfo
 
 

@@ -1,5 +1,8 @@
 from plone.scale.storage import AnnotationStorage as Base
+
 import logging
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -8,7 +11,7 @@ class AnnotationStorage(Base):
         key = super().hash_key(**parameters)
         fieldname = parameters.get("fieldname")
         if fieldname:
-            field = getattr(self.context, 'image', None)
+            field = getattr(self.context, "image", None)
             if getattr(field, "contentType", None) in ("image/jpeg", "image/png"):
                 key = f"{key}-webp"
         logger.debug("hash_key %s %s -> %s", self, parameters, key)
@@ -18,9 +21,9 @@ class AnnotationStorage(Base):
         key = super().hash(**parameters)
         fieldname = parameters.get("fieldname")
         if fieldname:
-            field = getattr(self.context, 'image', None)
+            field = getattr(self.context, "image", None)
             if getattr(field, "contentType", None) in ("image/jpeg", "image/png"):
-                key = key + (("_format", "webp"), )
+                key = key + (("_format", "webp"),)
         logger.debug("key %s %s -> %s", self, parameters, key)
         return key
 

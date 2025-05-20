@@ -17,13 +17,15 @@ class RedturtleScaleLayer(PloneSandboxLayer):
         # The z3c.autoinclude feature is disabled in the Plone fixture base
         # layer.
         import plone.app.dexterity
+
         self.loadZCML(package=plone.app.dexterity)
         import plone.restapi
+
         self.loadZCML(package=plone.restapi)
         self.loadZCML(package=redturtle.scale)
 
     def setUpPloneSite(self, portal):
-        applyProfile(portal, 'redturtle.scale:default')
+        applyProfile(portal, "redturtle.scale:default")
 
 
 REDTURTLE_SCALE_FIXTURE = RedturtleScaleLayer()
@@ -31,11 +33,11 @@ REDTURTLE_SCALE_FIXTURE = RedturtleScaleLayer()
 
 REDTURTLE_SCALE_INTEGRATION_TESTING = IntegrationTesting(
     bases=(REDTURTLE_SCALE_FIXTURE,),
-    name='RedturtleScaleLayer:IntegrationTesting',
+    name="RedturtleScaleLayer:IntegrationTesting",
 )
 
 
 REDTURTLE_SCALE_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(REDTURTLE_SCALE_FIXTURE,),
-    name='RedturtleScaleLayer:FunctionalTesting',
+    name="RedturtleScaleLayer:FunctionalTesting",
 )
