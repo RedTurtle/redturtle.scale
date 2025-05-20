@@ -1,6 +1,10 @@
 from plone.scale import scale
 from plone.scale.scale import scalePILImage
-from redturtle.scale import logger
+
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def scaleSingleFrame(
