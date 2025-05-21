@@ -1,3 +1,4 @@
+from plone.namedfile.scaling import DefaultImageScalingFactory
 from plone.scale import scale
 from plone.scale.scale import scalePILImage
 
@@ -58,17 +59,31 @@ def scaleSingleFrame(
     return image, format_
 
 
+def create_scale(self, data, mode, height, width, **parameters):
+    if "convert_to_webp" in parameters:
+        del parameters["convert_to_webp"]
+    return self._old_create_scale(data, mode, height, width, **parameters)
+
+
 def apply_patches():
     logger.info("monkeypatch plone.scale.scale.scaleSingleFrame")
     # TODO: verificare che pillow abbia il supporto webp
     scale._old_scaleSingleFrame = scale.scaleSingleFrame
     scale.scaleSingleFrame = scaleSingleFrame
+    DefaultImageScalingFactory._old_create_scale = (
+        DefaultImageScalingFactory.create_scale
+    )
+    DefaultImageScalingFactory.create_scale = create_scale
 
 
 def unapply_patches():
     logger.info("unmonkeypatch plone.scale.scale.scaleSingleFrame")
     scale.scaleSingleFrame = scale._old_scaleSingleFrame
     del scale._old_scaleSingleFrame
+    DefaultImageScalingFactory.create_scale = (
+        DefaultImageScalingFactory._old_create_scale
+    )
+    del DefaultImageScalingFactory._old_create_scale
 
 
 # DEBUG
