@@ -3,6 +3,7 @@ from plone import api
 from Products.CMFPlone.interfaces import INonInstallable
 from redturtle.scale import logger
 from redturtle.scale.scale import unapply_patches
+import transaction
 from zope.interface import implementer
 
 
@@ -18,30 +19,21 @@ class HiddenProfiles(object):
         """Hide the upgrades package from site-creation and quickinstaller."""
         return ["redturtle.scale.upgrades"]
 
-
-def get_valid_objects(brains):
-    """Generate a list of objects associated with valid brains."""
-    for b in brains:
-        try:
-            obj = b.getObject()
-        except KeyError:
-            obj = None
-
-        if obj is None:  # warn on broken entries in the catalog
-            logger.warning("Invalid reference: {0}".format(b.getPath()))
-            continue
-        yield obj
-
-
 def post_install(context):
     """Post install script"""
     # Do something at the end of the installation of this package.
     # reindex image_scales metadata
     logger.info("Reindexing image_scales metadata")
     catalog = api.portal.get_tool("portal_catalog")
+    n = 0
+    tot = len(catalog._catalog.paths.values())
     for p in catalog._catalog.paths.values():
         # reindex only metadata
-        catalog.reindexObject(api.content.get(p), idxs=["image_scales"])
+        catalog.reindexObject(api.content.get(p), idxs=["id"])
+        n += 1
+        if n % 100 == 0:
+            logger.info("commit %s/%s", n, tot)
+            transaction.commit()
 
 
 def uninstall(context):
@@ -49,6 +41,12 @@ def uninstall(context):
     # Do something at the end of the uninstallation of this package.
     unapply_patches()
     catalog = api.portal.get_tool("portal_catalog")
+    n = 0
+    tot = len(catalog._catalog.paths.values())
     for p in catalog._catalog.paths.values():
         # reindex only metadata
-        catalog.reindexObject(api.content.get(p), idxs=["image_scales"])
+        catalog.reindexObject(api.content.get(p), idxs=["id"])
+        n += 1
+        if n % 100 == 0:
+            logger.info("commit %s/%s", n, tot)
+            transaction.commit()
