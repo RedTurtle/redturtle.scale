@@ -84,7 +84,9 @@ def unapply_patches():
         scale.scaleSingleFrame = scale._old_scaleSingleFrame
         del scale._old_scaleSingleFrame
     if hasattr(DefaultImageScalingFactory, "_old_create_scale"):
-        DefaultImageScalingFactory.create_scale = DefaultImageScalingFactory._old_create_scale
+        DefaultImageScalingFactory.create_scale = (
+            DefaultImageScalingFactory._old_create_scale
+        )
         del DefaultImageScalingFactory._old_create_scale
 
 
