@@ -69,7 +69,6 @@ def create_scale(self, data, mode, height, width, **parameters):
 
 def apply_patches():
     logger.info("monkeypatch plone.scale.scale.scaleSingleFrame")
-    # TODO: verificare che pillow abbia il supporto webp
     scale._old_scaleSingleFrame = scale.scaleSingleFrame
     scale.scaleSingleFrame = scaleSingleFrame
     DefaultImageScalingFactory._old_create_scale = (
