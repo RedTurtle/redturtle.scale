@@ -5,13 +5,6 @@
 .. image:: https://github.com/collective/redturtle.scale/actions/workflows/plone-package.yml/badge.svg
     :target: https://github.com/collective/redturtle.scale/actions/workflows/plone-package.yml
 
-.. image:: https://coveralls.io/repos/github/collective/redturtle.scale/badge.svg?branch=main
-    :target: https://coveralls.io/github/collective/redturtle.scale?branch=main
-    :alt: Coveralls
-
-.. image:: https://codecov.io/gh/collective/redturtle.scale/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/collective/redturtle.scale
-
 .. image:: https://img.shields.io/pypi/v/redturtle.scale.svg
     :target: https://pypi.python.org/pypi/redturtle.scale/
     :alt: Latest Version
