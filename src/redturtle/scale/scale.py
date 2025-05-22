@@ -62,6 +62,8 @@ def scaleSingleFrame(
 def create_scale(self, data, mode, height, width, **parameters):
     if "convert_to_webp" in parameters:
         del parameters["convert_to_webp"]
+    if "_format" in parameters:
+        del parameters["_format"]
     return self._old_create_scale(data, mode, height, width, **parameters)
 
 
