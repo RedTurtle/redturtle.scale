@@ -80,12 +80,12 @@ def apply_patches():
 
 def unapply_patches():
     logger.info("unmonkeypatch plone.scale.scale.scaleSingleFrame")
-    scale.scaleSingleFrame = scale._old_scaleSingleFrame
-    del scale._old_scaleSingleFrame
-    DefaultImageScalingFactory.create_scale = (
-        DefaultImageScalingFactory._old_create_scale
-    )
-    del DefaultImageScalingFactory._old_create_scale
+    if hasattr(scale, "_old_scaleSingleFrame"):
+        scale.scaleSingleFrame = scale._old_scaleSingleFrame
+        del scale._old_scaleSingleFrame
+    if hasattr(DefaultImageScalingFactory, "_old_create_scale"):
+        DefaultImageScalingFactory.create_scale = DefaultImageScalingFactory._old_create_scale
+        del DefaultImageScalingFactory._old_create_scale
 
 
 # DEBUG
