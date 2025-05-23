@@ -17,7 +17,7 @@ long_description = "\n\n".join(
 setup(
     name="redturtle.scale",
     version="1.0a1",
-    description="An add-on for Plone",
+    description="This is an high experimental addon to improve image management in Plone/Volto",
     long_description=long_description,
     # Get more from https://pypi.org/classifiers/
     classifiers=[
@@ -70,7 +70,5 @@ setup(
     entry_points="""
     [z3c.autoinclude.plugin]
     target = plone
-    [console_scripts]
-    update_locale = redturtle.scale.locales.update:update_locale
     """,
 )
