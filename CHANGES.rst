@@ -5,8 +5,8 @@ Changelog
 1.0a2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Improve install/uninstall setuphandler
+  [mamico]
 
 1.0a1 (2025-05-23)
 ------------------
