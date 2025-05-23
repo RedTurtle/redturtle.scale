@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a2 (unreleased)
+1.0a2 (2025-05-23)
 ------------------
 
 - Improve install/uninstall setuphandler

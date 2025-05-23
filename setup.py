@@ -16,7 +16,7 @@ long_description = "\n\n".join(
 
 setup(
     name="redturtle.scale",
-    version="1.0a2.dev0",
+    version="1.0a2",
     description="This is an high experimental addon to improve image management in Plone/Volto",
     long_description=long_description,
     # Get more from https://pypi.org/classifiers/
